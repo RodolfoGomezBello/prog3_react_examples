@@ -1,32 +1,12 @@
-import { useState } from "react";
 import tasksData from "../assets/tasks.json";
 
 function Task({
     taskName,
     description,
     dueDate,
-    isCompletedValue,
+    isCompleted,
     titleStyle = { color: "red", fontSize: "1.5rem" },
 }) {
-    // Manejando estados con variables independientes
-
-    //const [isCompleted, setIsCompleted] = useState(isCompletedValue);
-    //const [message, setMessage] = useState(null);
-
-    // Manejando estos con un objeto
-    const [taskData, setTask] = useState({
-        isCompleted: isCompletedValue,
-        message: null,
-    });
-
-    function handleClick() {
-        if (taskData.isCompleted) {
-            setTask({ message: null, isCompleted: false });
-        } else {
-            setTask({ message: "Completado", isCompleted: true });
-        }
-    }
-
     return (
         <div className="box">
             <div className="columns is-vcentered">
@@ -34,26 +14,15 @@ function Task({
                     <input
                         type="checkbox"
                         className="checkbox"
-                        defaultChecked={taskData.isCompleted}
-                        onClick={handleClick}
+                        defaultChecked={isCompleted}
                     />
                 </div>
                 <div className="column">
                     {/*Aplicación de estilo en línea mediante objetos*/}
-                    {taskData.isCompleted ? (
-                        <del>
-                            <p style={titleStyle}>
-                                <strong>{taskName} </strong>
-                                <small>{dueDate}</small>
-                            </p>
-                        </del>
-                    ) : (
-                        <p style={titleStyle}>
-                            <strong>{taskName} </strong>
-                            <small>{dueDate}</small>
-                        </p>
-                    )}
-                    {taskData.message ? taskData.message : null}
+                    <p style={titleStyle}>
+                        <strong>{taskName} </strong>
+                        <small>{dueDate}</small>
+                    </p>
                 </div>
             </div>
             <p>{description}</p>
@@ -90,7 +59,7 @@ function TaskList({ listName = "Lista de tareas" }) {
                     taskName={task.taskName}
                     description={task.description}
                     dueDate={task.dueDate}
-                    isCompletedValue={task.isCompleted}
+                    isCompleted={task.isCompleted}
                     key={task.taskName}
                 />
             ))}
